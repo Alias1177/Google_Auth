@@ -76,12 +76,30 @@ func main() {
 	r.Get("/auth/google/callback", googleCallbackHandler)
 	r.Get("/dashboard", dashboardHandler)
 	r.Get("/logout", logoutHandler)
-
-	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	r.Get("/users/{id}", getUserHandler)
 
 	port := "3000"
 	fmt.Println("Сервер запущен на порту:", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
+}
+func getUserHandler(w http.ResponseWriter, r *http.Request) {
+	// Извлекаем ID пользователя из URL
+	userID := chi.URLParam(r, "id")
+
+	// Ищем данные пользователя в базе данных
+	var user User
+	err := db.Get(&user, "SELECT id, name, email FROM users WHERE id = $1", userID)
+	if err != nil {
+		http.Error(w, "Пользователь не найден", http.StatusNotFound)
+		return
+	}
+
+	// Возвращаем данные пользователя в формате JSON
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(user); err != nil {
+		http.Error(w, "Ошибка при сериализации данных", http.StatusInternalServerError)
+		return
+	}
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -173,9 +191,8 @@ func dashboardHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Ошибка десериализации данных пользователя", http.StatusInternalServerError)
 		return
 	}
-
 	tmpl, _ := os.ReadFile("templates/dashboard.html")
-	w.Write([]byte(fmt.Sprintf(string(tmpl), user.Name, user.Email)))
+	_, _ = w.Write(tmpl)
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {

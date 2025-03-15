@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Авторизация</title>
-    <link rel="stylesheet" href="/Google_Auth/static/styles.css">
+    <title>Регистрация</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div class="container">
-    <h1>Добро пожаловать!</h1>
-    <p>Войдите через Google, чтобы продолжить.</p>
-    <a href="/auth/google" class="login-btn">Войти через Google</a>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+<div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold text-center mb-4">Auth</h2>
+    <p class="text-gray-600 text-center mb-6">Sign up with Google</p>
+
+    <a href="/auth/google" class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+        <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" class="w-5 h-5">
+        Sign up
+    </a>
 </div>
 </body>
 </html>
