@@ -8,6 +8,10 @@ services:
       - db
     env_file:
       - .env
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/root/google-credentials.json
+    volumes:
+      - /root/google_auth/Google_Auth/google-credentials.json:/root/google-credentials.json:ro # 👍 исправлено
     restart: always
 
   db:

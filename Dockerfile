@@ -15,7 +15,6 @@ WORKDIR /root/
 
 COPY --from=builder /app/main .
 COPY templates ./templates
-COPY .env .
 
 EXPOSE 3000
 

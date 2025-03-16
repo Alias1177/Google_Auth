@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
-
 	"github.com/go-chi/chi/v5"
 
 	"github.com/gorilla/sessions"
@@ -35,8 +33,6 @@ var (
 )
 
 func init() {
-	// Загружаем переменные окружения из файла .env
-	_ = godotenv.Load()
 
 	// Настройки OAuth
 	oauthConfig = &oauth2.Config{
