@@ -20,7 +20,7 @@ jobs:
 
       - name: 🚀 Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             mkdir -p /root/google_auth
             cd /root/google_auth
             if [ ! -d "Google_Auth" ]; then
@@ -29,5 +29,7 @@ jobs:
             cd Google_Auth
             git pull origin main
             docker-compose down
-            docker-compose up -d --build
+
+            # Запускаем docker-compose как фоновый процесс, чтобы разрыв не помешал
+            nohup docker-compose up -d --build &
           EOF
