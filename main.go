@@ -59,7 +59,7 @@ func init() {
 		SameSite: http.SameSiteLaxMode, // Либо http.SameSiteStrictMode
 		Secure:   false,                // Используйте true в продакшене, если у вас HTTPS
 	}
-
+	//
 	// Подключение к базе данных PostgreSQL через sqlx
 	var err error
 	connStr := os.Getenv("DATABASE_URL")
