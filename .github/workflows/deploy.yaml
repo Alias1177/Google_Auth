@@ -18,7 +18,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: 🚀 Deploy to Server (nohup background execution)
+      - name: 🚀 Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             mkdir -p /root/google_auth
@@ -26,10 +26,10 @@ jobs:
             if [ ! -d "Google_Auth" ]; then
               git clone git@github.com:Alias1177/Google_Auth.git
             fi
-            cd Google_Auth
+            cd /root/google_auth/Google_Auth
             git pull origin main
             docker-compose down
 
-            # 📌 УСТРАНЕНИЕ проблемы с разрывом соединения:
-            nohup docker-compose up -d --build > /dev/null 2>&1 &
+            # 🔥 Запускаем 
+            docker-compose up -d --build
           EOF
