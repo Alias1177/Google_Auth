@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   app:
     build: .
@@ -23,6 +21,7 @@ services:
       - "5552:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
 
 volumes:
   pg_data:
