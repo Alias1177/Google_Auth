@@ -82,6 +82,8 @@ func main() {
 	fmt.Println("Сервер запущен на порту:", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
+
+// как то так
 func getUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Извлекаем ID пользователя из URL
 	userID := chi.URLParam(r, "id")
