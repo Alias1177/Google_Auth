@@ -18,7 +18,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: 🚀 Deploy to Server
+      - name: 🚀 Deploy to Server (nohup background execution)
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             mkdir -p /root/google_auth
@@ -30,6 +30,6 @@ jobs:
             git pull origin main
             docker-compose down
 
-            # Запускаем docker-compose как фоновый процесс, чтобы разрыв не помешал
-            nohup docker-compose up -d --build &
+            # 📌 УСТРАНЕНИЕ проблемы с разрывом соединения:
+            nohup docker-compose up -d --build > /dev/null 2>&1 &
           EOF
