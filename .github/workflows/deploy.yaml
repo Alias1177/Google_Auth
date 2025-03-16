@@ -3,26 +3,25 @@ name: Deploy Google_Auth
 on:
   push:
     branches:
-      - main # запускать workflow после каждого пуша в ветку main ✅
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # Мы используем сервер GitHub с Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code 🛎️
+      - name: 🛎️ Checkout code
         uses: actions/checkout@v4
 
-      # Корректный и рабочий шаг. Исправлена версия на v0.9.0
-      - name: Setup SSH Agent 🔑
+      - name: 🔑 Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: 🚀 Deploy code to server
+      - name: 🚀 Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
-            cd ~/Google_Auth
+            cd /root/Google_Auth
             git pull origin main
             docker-compose down
             docker-compose up -d --build
