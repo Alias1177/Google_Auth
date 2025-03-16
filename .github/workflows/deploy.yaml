@@ -21,7 +21,12 @@ jobs:
       - name: 🚀 Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
-            cd /root/Google_Auth
+            mkdir -p /root/google_auth
+            cd /root/google_auth
+            if [ ! -d "Google_Auth" ]; then
+              git clone git@github.com:Alias1177/Google_Auth.git
+            fi
+            cd Google_Auth
             git pull origin main
             docker-compose down
             docker-compose up -d --build
